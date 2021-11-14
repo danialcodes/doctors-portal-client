@@ -1,15 +1,17 @@
 import React from 'react';
 import Navigation from '../../Shared/Navigation/Navigation';
-import AppionmentBanner from '../AppionmentBanner/AppionmentBanner';
+import AppoinmentBanner from '../AppoinmentBanner/AppoinmentBanner';
+import Banner from '../Banner/Banner';
 import Services from '../Services/Services';
 
 const Home = () => {
     return (
-        <div>
+        <>
             <Navigation></Navigation>
-            <AppionmentBanner/>
+            <Banner></Banner>
             <Services></Services>
-        </div>
+            <AppoinmentBanner/>
+        </>
     );
 };
 
