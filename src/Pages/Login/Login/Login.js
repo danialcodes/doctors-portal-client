@@ -37,7 +37,7 @@ const Login = () => {
                         <TextField
                             onBlur={handleOnchange}
                             sx={{ width: "75%", m: 1 }}
-                            id="standard-basic"
+                             
                             label="Your Email"
                             variant="standard"
                             name="email" />
@@ -45,7 +45,7 @@ const Login = () => {
                         <TextField
                             onBlur={handleOnchange}
                             sx={{ width: "75%", m: 1 }}
-                            id="standard-basic"
+                             
                             label="Password"
                             variant="standard"
                             type="password"

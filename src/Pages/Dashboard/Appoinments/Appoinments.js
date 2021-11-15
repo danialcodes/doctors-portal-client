@@ -14,10 +14,10 @@ const Appoinment = ({date}) => {
     const [appoinment, setAppoinment] = useState([]);
 
     useEffect(() => {
-        const url = `http://localhost:5000/appoinments?email=${user.email}&date=${date.toLocaleDateString()}`;
+        const url = `https://danialcodes-doctors-portal.herokuapp.com/appoinments?email=${user.email}&date=${date.toLocaleDateString()}`;
         axios.get(url)
             .then(res => setAppoinment(res.data));
-    }, [date]);
+    }, [date,user.email]);
 
     return (
         <div>

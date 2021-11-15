@@ -45,7 +45,7 @@ const AppoinmentModal = ({ setBookingSuccess, date, openBooking, handleCloseBook
         const submit = window.confirm("Confirm Appoinment?");
 
         if (submit) {
-            axios.post("http://localhost:5000/appoinments", {...appoinment,date:date.toLocaleDateString()})
+            axios.post("https://danialcodes-doctors-portal.herokuapp.com/appoinments", {...appoinment,date:date.toLocaleDateString()})
                 .then(res => {
                     res = res.data;
                     if (res.insertedId) {

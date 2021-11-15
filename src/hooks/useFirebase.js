@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import initializeFirebase from "../Pages/Login/Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, updateProfile, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, updateProfile, getIdToken, signOut } from "firebase/auth";
 import axios from "axios";
 
 // Initialize Firebase app
 initializeFirebase();
 
 const useFirebase = () => {
+
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
     const [authError, setAuthError] = useState("");
+    const [admin, setAdmin] = useState(false);
+    const [token, setToken] = useState('');
+    const [adminLoading, setAdminLoading] = useState(false);
     const auth = getAuth();
 
     // Providers
@@ -20,14 +24,30 @@ const useFirebase = () => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
+                getIdToken(user)
+                    .then(idToken => {
+                        setToken(idToken);
+                    });
             } else {
                 setUser({});
             }
             setLoading(false);
         });
         return () => unsubscribe;
-    }, []);
+    }, [auth]);
 
+    // Check if User is Admin Or Not
+    useEffect(() => {
+        setAdminLoading(true);
+        const url = `https://danialcodes-doctors-portal.herokuapp.com/users/${user.email}`;
+        axios.get(url, user)
+            .then(res => {
+                const isAdmin = res.data.admin;
+                setAdmin(isAdmin);
+                setAdminLoading(false);
+            });
+
+    }, [user]);
 
     // Redirect After Login 
     const redirect = (location, history) => {
@@ -112,7 +132,7 @@ const useFirebase = () => {
     // Save User To MongoDB Database
     const saveUser = (email, displayName) => {
         const user = { email, displayName };
-        const url = "http://localhost:5000/users";
+        const url = "https://danialcodes-doctors-portal.herokuapp.com/users";
         axios.put(url, user)
             .then(res => console.log(res.data));
     }
@@ -121,6 +141,9 @@ const useFirebase = () => {
     return {
         loading,
         user,
+        admin,
+        adminLoading,
+        token,
         authError,
         registerUser,
         loginUser,

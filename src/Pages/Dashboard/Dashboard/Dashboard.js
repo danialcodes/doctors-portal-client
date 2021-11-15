@@ -15,26 +15,27 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Button, Grid } from '@mui/material';
+import { Button } from '@mui/material';
 import {
     Switch,
     Route,
     Link,
-    useParams,
     useRouteMatch
 } from "react-router-dom";
 import DashboardHome from '../DashboardHome/DashboardHome';
 import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import AddDoctor from '../AddDoctor/AddDoctor';
+import useAuth from '../../../hooks/useAuth';
+import AdminRoute from '../../Login/AdminRoute/AdminRoute';
 
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
+    const { admin } = useAuth();
     let { path, url } = useRouteMatch();
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [date, setDate] = React.useState(new Date());
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -48,12 +49,19 @@ function Dashboard(props) {
             <Link style={{ textDecoration: "none" }} to={`${url}`}>
                 <Button variant='contained' sx={{ my: 2 }}>Dashboard</Button>
             </Link>
-            <Link style={{ textDecoration: "none" }} to={`${url}/makeAdmin`}>
-                <Button variant='contained' sx={{ my: 2 }}>Make Admin</Button>
-            </Link>
-            <Link style={{ textDecoration: "none" }} to={`${url}/addDoctor`}>
-                <Button variant='contained' sx={{ my: 2 }}>Add Doctor</Button>
-            </Link>
+
+            {
+                admin &&
+                <>
+                    <Link style={{ textDecoration: "none" }} to={`${url}/makeAdmin`}>
+                        <Button variant='contained' sx={{ my: 2 }}>Make Admin</Button>
+                    </Link>
+                    <Link style={{ textDecoration: "none" }} to={`${url}/addDoctor`}>
+                        <Button variant='contained' sx={{ my: 2 }}>Add Doctor</Button>
+                    </Link>
+                </>
+            }
+
             <Divider />
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -132,16 +140,19 @@ function Dashboard(props) {
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
+
+                {/* Nested Route */}
                 <Switch>
                     <Route exact path={path}>
                         <DashboardHome></DashboardHome>
                     </Route>
-                    <Route path={`${path}/makeAdmin`}>
+
+                    <AdminRoute path={`${path}/makeAdmin`}>
                         <MakeAdmin></MakeAdmin>
-                    </Route>
-                    <Route path={`${path}/addDoctor`}>
+                    </AdminRoute>
+                    <AdminRoute path={`${path}/addDoctor`}>
                         <AddDoctor></AddDoctor>
-                    </Route>
+                    </AdminRoute>
                 </Switch>
             </Box>
         </Box>

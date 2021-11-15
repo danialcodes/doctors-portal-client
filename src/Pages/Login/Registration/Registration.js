@@ -49,14 +49,14 @@ const Registration = () => {
                             <TextField
                                 onBlur={handleOnBlur}
                                 sx={{ width: "75%", m: 1 }}
-                                id="standard-basic"
+                                  
                                 label="Your Name"
                                 variant="standard"
                                 name="name" />
                             <TextField
                                 onBlur={handleOnBlur}
                                 sx={{ width: "75%", m: 1 }}
-                                id="standard-basic"
+                                  
                                 label="Your Email"
                                 variant="standard"
                                 name="email" />
@@ -64,7 +64,7 @@ const Registration = () => {
                             <TextField
                                 onBlur={handleOnBlur}
                                 sx={{ width: "75%", m: 1 }}
-                                id="standard-basic"
+                                  
                                 label="Password"
                                 variant="standard"
                                 type="password"
@@ -73,7 +73,7 @@ const Registration = () => {
                             <TextField
                                 onBlur={handleOnBlur}
                                 sx={{ width: "75%", m: 1 }}
-                                id="standard-basic"
+                                  
                                 label="Confirm Password"
                                 variant="standard"
                                 type="password"
