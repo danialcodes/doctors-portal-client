@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const Appoinment = ({date}) => {
+const Appoinment = ({ date }) => {
     const { user } = useAuth();
     const [appoinment, setAppoinment] = useState([]);
 
@@ -17,7 +17,7 @@ const Appoinment = ({date}) => {
         const url = `https://danialcodes-doctors-portal.herokuapp.com/appoinments?email=${user.email}&date=${date.toLocaleDateString()}`;
         axios.get(url)
             .then(res => setAppoinment(res.data));
-    }, [date,user.email]);
+    }, [date, user.email]);
 
     return (
         <div>

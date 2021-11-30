@@ -19,7 +19,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-const AppoinmentModal = ({ setBookingSuccess, date, openBooking, handleCloseBooking, booking }) => {
+const AppoinmentModal = ({ setBookingError, setBookingSuccess, date, openBooking, handleCloseBooking, booking }) => {
     const { name, time } = booking;
     const { user } = useAuth();
     const initialAppoinment = {
@@ -34,7 +34,7 @@ const AppoinmentModal = ({ setBookingSuccess, date, openBooking, handleCloseBook
     const handleBookingDetails = e => {
         const field = e.target.name;
         const value = e.target.value;
-        const newAppoinment = { ...appoinment}
+        const newAppoinment = { ...appoinment }
         newAppoinment[field] = value;
         setAppoinment(newAppoinment);
     }
@@ -45,11 +45,15 @@ const AppoinmentModal = ({ setBookingSuccess, date, openBooking, handleCloseBook
         const submit = window.confirm("Confirm Appoinment?");
 
         if (submit) {
-            axios.post("https://danialcodes-doctors-portal.herokuapp.com/appoinments", {...appoinment,date:date.toLocaleDateString()})
+            axios.post("https://danialcodes-doctors-portal.herokuapp.com/appoinments", { ...appoinment, date: date.toLocaleDateString() })
                 .then(res => {
                     res = res.data;
                     if (res.insertedId) {
                         setBookingSuccess(true)
+                        handleCloseBooking();
+                    }
+                    else {
+                        setBookingError(true);
                         handleCloseBooking();
                     }
                 });

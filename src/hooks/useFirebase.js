@@ -134,7 +134,7 @@ const useFirebase = () => {
         const user = { email, displayName };
         const url = "https://danialcodes-doctors-portal.herokuapp.com/users";
         axios.put(url, user)
-            .then(res => console.log(res.data));
+            .then(res => console.log("User Added to Database"));
     }
 
 

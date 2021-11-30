@@ -2,35 +2,53 @@ import { Button, TextField, Alert, AlertTitle } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
+import AllAdmin from './AllAdmin/AllAdmin';
+
 
 const MakeAdmin = () => {
     const [email, setEmail] = useState();
-    const [error, setError] = useState();
+    const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
+
     const { token } = useAuth();
+
     const handleOnBlur = (e) => {
         setEmail(e.target.value);
     }
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
+    if (success || error) {
+        setTimeout(() => {
+            setError(false);
+            setSuccess(false);
+        }, 1500);
+    }
+
+    const updateRole = (email, role) => {
+
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.put("https://danialcodes-doctors-portal.herokuapp.com/users/admin", { email }, config)
+        axios.put("https://danialcodes-doctors-portal.herokuapp.com/users/admin", { email, role }, config)
             .then(res => {
                 if (res.data.modifiedCount) {
                     setSuccess(res.data.message);
                     setError(false);
-                    console.log(res.data);
+                    // console.log(res.data);
                 }
                 else {
                     setSuccess(false);
                     setError(res.data.message);
-                    console.log(res.data);
+                    // console.log(res.data);
 
                 }
+
             });
     }
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        updateRole(email, "a");
+    }
+
     return (
         <>
             <h2>Make me admin</h2>
@@ -49,6 +67,7 @@ const MakeAdmin = () => {
                     <AlertTitle>{error}</AlertTitle>
                 </Alert>
             }
+            <AllAdmin error={error} success={success} updateRole={updateRole}></AllAdmin>
         </>
     );
 };
