@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined'; import RemoveModeratorOutlinedIcon from '@mui/icons-material/RemoveModeratorOutlined'; import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -41,7 +40,7 @@ const AllAdmin = ({ error, success, updateRole }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        const url = "https://danialcodes-doctors-portal.herokuapp.com/users";
+        const url = "http://localhost:5000/users";
         axios.get(url)
             .then(res => setUsers(res.data));
     }, [error, success]);

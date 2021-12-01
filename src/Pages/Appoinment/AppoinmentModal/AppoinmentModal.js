@@ -20,17 +20,18 @@ const style = {
     p: 4,
 };
 const AppoinmentModal = ({ setBookingError, setBookingSuccess, date, openBooking, handleCloseBooking, booking }) => {
-    const { name, time } = booking;
+    const { name, time, price } = booking;
     const { user } = useAuth();
     const initialAppoinment = {
         name,
         patientName: user.displayName,
         email: user.email,
         phone: '',
-        slot: time
+        slot: time,
+        price
     };
     const [appoinment, setAppoinment] = useState(initialAppoinment);
-
+    
     const handleBookingDetails = e => {
         const field = e.target.name;
         const value = e.target.value;
@@ -45,7 +46,7 @@ const AppoinmentModal = ({ setBookingError, setBookingSuccess, date, openBooking
         const submit = window.confirm("Confirm Appoinment?");
 
         if (submit) {
-            axios.post("https://danialcodes-doctors-portal.herokuapp.com/appoinments", { ...appoinment, date: date.toLocaleDateString() })
+            axios.post("http://localhost:5000/appoinments", { ...appoinment, date: date.toLocaleDateString() })
                 .then(res => {
                     res = res.data;
                     if (res.insertedId) {
@@ -93,6 +94,14 @@ const AppoinmentModal = ({ setBookingError, setBookingSuccess, date, openBooking
                             defaultValue={user.displayName}
                             size="small"
                             name="patientName"
+                        />
+                        <TextField
+                            disabled
+                            sx={{ width: "90%" }}
+                            id="outlined-size-small"
+                            defaultValue={"Price is $"+price}
+                            size="small"
+                            name="price"
                         />
                         <TextField
                             onChange={handleBookingDetails}
