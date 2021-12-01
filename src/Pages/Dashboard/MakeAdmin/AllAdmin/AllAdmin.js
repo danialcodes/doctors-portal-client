@@ -40,7 +40,7 @@ const AllAdmin = ({ error, success, updateRole }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        const url = "http://localhost:5000/users";
+        const url = "https://danialcodes-doctors-portal.herokuapp.com/users";
         axios.get(url)
             .then(res => setUsers(res.data));
     }, [error, success]);

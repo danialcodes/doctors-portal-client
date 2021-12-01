@@ -5,18 +5,18 @@ import useAuth from '../../../hooks/useAuth';
 
 
 
-const CheckoutForm = ({ appoinment,setError,setSuccess }) => {
-    const {price,patientName} = appoinment;
+const CheckoutForm = ({ appoinment, setError, setSuccess }) => {
+    const { price, patientName } = appoinment;
     const stripe = useStripe();
     const elements = useElements();
-    const {user} = useAuth();
-    const [clientSecret,setClientSecret] = useState('');
-    useEffect(()=>{
-        axios.post("http://localhost:5000/create-payment-intent",{price}).
-        then(res=>{
-            setClientSecret(res.data.clientSecret);
-        });
-    },[price]);
+    const { user } = useAuth();
+    const [clientSecret, setClientSecret] = useState('');
+    useEffect(() => {
+        axios.post("https://danialcodes-doctors-portal.herokuapp.com/create-payment-intent", { price }).
+            then(res => {
+                setClientSecret(res.data.clientSecret);
+            });
+    }, [price]);
 
     const handleSubmit = async (event) => {
         // Block native form submission.
@@ -52,27 +52,27 @@ const CheckoutForm = ({ appoinment,setError,setSuccess }) => {
         }
 
 
-        const {paymentIntent, error:err} = await stripe.confirmCardPayment(
+        const { paymentIntent, error: err } = await stripe.confirmCardPayment(
             clientSecret,
             {
-              payment_method: {
-                card,
-                billing_details: {
-                  name: patientName,
-                  email: user.email
+                payment_method: {
+                    card,
+                    billing_details: {
+                        name: patientName,
+                        email: user.email
+                    },
                 },
-              },
             },
-          );
-          if(err){
-              setError(err.message);
-              setSuccess("");
-          }
-          else{
+        );
+        if (err) {
+            setError(err.message);
+            setSuccess("");
+        }
+        else {
             setSuccess("Success")
-              setError('');
-              console.log(paymentIntent);
-          }
+            setError('');
+            console.log(paymentIntent);
+        }
 
     };
 
@@ -98,9 +98,9 @@ const CheckoutForm = ({ appoinment,setError,setSuccess }) => {
             <button type="submit" disabled={!stripe}>
                 Pay ${price}
             </button>
-            
+
         </form>
-        
+
     );
 };
 
