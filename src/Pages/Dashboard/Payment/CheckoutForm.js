@@ -12,8 +12,8 @@ const CheckoutForm = ({ appoinment, setError, setSuccess }) => {
     const { user } = useAuth();
     const [clientSecret, setClientSecret] = useState('');
     useEffect(() => {
-        axios.post("https://danialcodes-doctors-portal.herokuapp.com/create-payment-intent", { price }).
-            then(res => {
+        axios.post("https://danialcodes-doctors-portal.herokuapp.com/create-payment-intent", { price })
+            .then(res => {
                 setClientSecret(res.data.clientSecret);
             });
     }, [price]);
