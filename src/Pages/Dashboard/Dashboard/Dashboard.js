@@ -12,24 +12,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import {
-    Switch,
-    Route,
-    Link,
-    useRouteMatch
+    Outlet,
+    Link
 } from "react-router-dom";
-import DashboardHome from '../DashboardHome/DashboardHome';
-import MakeAdmin from '../MakeAdmin/MakeAdmin';
-import AddDoctor from '../AddDoctor/AddDoctor';
+
 import useAuth from '../../../hooks/useAuth';
-import AdminRoute from '../../Login/AdminRoute/AdminRoute';
-import Payment from '../Payment/Payment';
+
 
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
     const { admin } = useAuth();
-    let { path, url } = useRouteMatch();
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const handleDrawerToggle = () => {
@@ -42,17 +36,17 @@ function Dashboard(props) {
             <Link style={{ textDecoration: "none" }} to="/appoinment">
                 <Button variant='contained' sx={{ my: 2 }}>Appoinment</Button>
             </Link>
-            <Link style={{ textDecoration: "none" }} to={`${url}`}>
+            <Link style={{ textDecoration: "none" }} to={`/dashboard`}>
                 <Button variant='contained' sx={{ my: 2 }}>Dashboard</Button>
             </Link>
 
             {
                 admin &&
                 <>
-                    <Link style={{ textDecoration: "none" }} to={`${url}/makeAdmin`}>
+                    <Link style={{ textDecoration: "none" }} to={`/dashboard/makeAdmin`}>
                         <Button variant='contained' sx={{ my: 2 }}>Make Admin</Button>
                     </Link>
-                    <Link style={{ textDecoration: "none" }} to={`${url}/addDoctor`}>
+                    <Link style={{ textDecoration: "none" }} to={`/dashboard/addDoctor`}>
                         <Button variant='contained' sx={{ my: 2 }}>Add Doctor</Button>
                     </Link>
                 </>
@@ -138,21 +132,8 @@ function Dashboard(props) {
                 <Toolbar />
 
                 {/* Nested Route */}
-                <Switch>
-                    <Route exact path={path}>
-                        <DashboardHome></DashboardHome>
-                    </Route>
-                    <Route path={path + `/payment/:appoinmentId`}>
-                        <Payment></Payment>
-                    </Route>
-
-                    <AdminRoute path={`${path}/makeAdmin`}>
-                        <MakeAdmin></MakeAdmin>
-                    </AdminRoute>
-                    <AdminRoute path={`${path}/addDoctor`}>
-                        <AddDoctor></AddDoctor>
-                    </AdminRoute>
-                </Switch>
+                <Outlet/>
+                
             </Box>
         </Box>
     );

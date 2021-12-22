@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
 import login from "../../../images/login.png";
 import CircularProgress from '@mui/material/CircularProgress';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 const Registration = () => {
     const { user, registerUser, loading, authError } = useAuth();
     const [loginData, setLoginData] = useState({});
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleRegisterSubmit = e => {
         e.preventDefault();
@@ -20,7 +20,7 @@ const Registration = () => {
                 alert("Password Not Matched")
             }
             else {
-                registerUser(name, email, password, history);
+                registerUser(name, email, password, navigate);
             }
 
         }

@@ -50,9 +50,9 @@ const useFirebase = () => {
     }, [user]);
 
     // Redirect After Login 
-    const redirect = (location, history) => {
+    const redirect = (location, navigate) => {
         const destination = location?.state?.from || "/";
-        history.replace(destination);
+        navigate(destination);
     }
 
 
@@ -67,7 +67,7 @@ const useFirebase = () => {
     }
 
     // User Registration
-    const registerUser = (name, email, password, history) => {
+    const registerUser = (name, email, password, navigate) => {
         setLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -80,7 +80,7 @@ const useFirebase = () => {
 
                 // Update User Name
                 updateUser(updatedData);
-                redirect("/", history);
+                redirect("/", navigate);
                 setAuthError("");
             })
             .catch((error) => {
@@ -90,11 +90,11 @@ const useFirebase = () => {
     }
 
     // User Login
-    const loginUser = (email, password, location, history) => {
+    const loginUser = (email, password, location, navigate) => {
         setLoading(true);
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                redirect(location, history);
+                redirect(location, navigate);
                 setAuthError("");
             })
             .catch((error) => {
@@ -104,14 +104,14 @@ const useFirebase = () => {
     }
 
     // User Login Using Google
-    const loginUserUsingGoogle = (location, history) => {
+    const loginUserUsingGoogle = (location, navigate) => {
         setLoading(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
                 saveUser(user.email, user.displayName);
                 setAuthError("");
-                redirect(location, history);
+                redirect(location, navigate);
 
             }).catch((error) => {
                 setAuthError(error.message);

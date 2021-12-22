@@ -9,14 +9,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const Appoinment = ({ date }) => {
     const { user } = useAuth();
     const [appoinment, setAppoinment] = useState([]);
-    const history = useHistory();
+    const navigate = useNavigate();
     const payNow = (appoinmentId) => {
-        history.push(`/dashboard/payment/${appoinmentId}`);
+        navigate(`/dashboard/payment/${appoinmentId}`);
     }
     useEffect(() => {
         const url = `https://danialcodes-doctors-portal.herokuapp.com/appoinments?email=${user.email}&date=${date.toLocaleDateString()}`;
