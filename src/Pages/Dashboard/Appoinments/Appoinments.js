@@ -19,7 +19,7 @@ const Appoinment = ({ date }) => {
         navigate(`/dashboard/payment/${appoinmentId}`);
     }
     useEffect(() => {
-        const url = `https://danialcodes-doctors-portal.herokuapp.com/appoinments?email=${user.email}&date=${date.toLocaleDateString()}`;
+        const url = `${process.env.REACT_APP_API_URL}/appoinments?email=${user.email}&date=${date.toLocaleDateString()}`;
         axios.get(url)
             .then(res => setAppoinment(res.data));
     }, [date, user.email]);

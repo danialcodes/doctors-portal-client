@@ -9,7 +9,7 @@ const AvailableAppoinments = ({ date }) => {
     const [bookingError, setBookingError] = useState(false);
     const [bookings, setBookings] = useState([]);
     useEffect(() => {
-        const url = "https://danialcodes-doctors-portal.herokuapp.com/availableslots";
+        const url = `${process.env.REACT_APP_API_URL}/availableslots`;
         axios.get(url)
             .then(res => setBookings(res.data));
     }, [bookingSuccess])

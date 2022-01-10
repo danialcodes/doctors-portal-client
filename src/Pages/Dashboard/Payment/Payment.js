@@ -15,7 +15,7 @@ const Payment = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     useEffect(() => {
-        axios.get(`https://danialcodes-doctors-portal.herokuapp.com/appoinments/${appoinmentId}`).
+        axios.get(`${process.env.REACT_APP_API_URL}/appoinments/${appoinmentId}`).
             then(res => setAppoinment(res.data));
     }, [appoinmentId]);
 

@@ -27,7 +27,7 @@ const MakeAdmin = () => {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.put("https://danialcodes-doctors-portal.herokuapp.com/users/admin", { email, role }, config)
+        axios.put(`${process.env.REACT_APP_API_URL}/users/admin`, { email, role }, config)
             .then(res => {
                 if (res.data.modifiedCount) {
                     setSuccess(res.data.message);

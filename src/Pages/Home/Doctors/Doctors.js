@@ -6,7 +6,7 @@ import Doctor from './Doctor';
 const Doctors = () => {
     const [doctors, setDoctors] = useState([]);
     useEffect(() => {
-        axios.get("https://danialcodes-doctors-portal.herokuapp.com/doctors")
+        axios.get(`${process.env.REACT_APP_API_URL}/doctors`)
             .then(res => {
                 setDoctors(res.data);
             })
@@ -17,7 +17,7 @@ const Doctors = () => {
             <Container>
                 <Grid container spacing={2}>
                     {doctors.map(doctor => <Doctor
-                    key={doctor._id} doctor={doctor}></Doctor>)}
+                        key={doctor._id} doctor={doctor}></Doctor>)}
 
                 </Grid>
             </Container>

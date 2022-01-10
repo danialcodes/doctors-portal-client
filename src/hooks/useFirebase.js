@@ -39,7 +39,7 @@ const useFirebase = () => {
     // Check if User is Admin Or Not
     useEffect(() => {
         setAdminLoading(true);
-        const url = `https://danialcodes-doctors-portal.herokuapp.com/users/${user.email}`;
+        const url = `${process.env.REACT_APP_API_URL}/users/${user.email}`;
         axios.get(url, user)
             .then(res => {
                 const isAdmin = res.data.admin;
@@ -132,7 +132,7 @@ const useFirebase = () => {
     // Save User To MongoDB Database
     const saveUser = (email, displayName) => {
         const user = { email, displayName };
-        const url = "https://danialcodes-doctors-portal.herokuapp.com/users";
+        const url = `${process.env.REACT_APP_API_URL}/users`;
         axios.put(url, user)
             .then(res => console.log("User Added to Database"));
     }
