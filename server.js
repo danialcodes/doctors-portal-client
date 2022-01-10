@@ -9,5 +9,5 @@ app.get('/*', function (req, res) {
 });
 
 app.listen(port,()=>{
-    console.log("Client Server started at port "+port);
+    console.log("Make sure to run npm run build\nClient Server started at port "+port);
 });
