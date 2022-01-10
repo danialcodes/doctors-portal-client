@@ -12,7 +12,7 @@ const CheckoutForm = ({ appoinment, setError, setSuccess }) => {
     const { user } = useAuth();
     const [clientSecret, setClientSecret] = useState('');
     useEffect(() => {
-        axios.post("${process.env.REACT_APP_API_URL}/create-payment-intent", { price })
+        axios.post(`${process.env.REACT_APP_API_URL}/create-payment-intent`, { price })
             .then(res => {
                 setClientSecret(res.data.clientSecret);
             });
